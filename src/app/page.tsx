@@ -7,7 +7,8 @@ import { RevealCard } from "@/components/RevealCard";
 import { Collection } from "@/components/Collection";
 import { useTheme } from 'next-themes';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Sun, Moon, Star } from "lucide-react";
+import { Sun, Moon, Star, AlertTriangle } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 // Define the type for a Pokemon card
 interface PokemonCard {
@@ -21,24 +22,21 @@ interface PokemonCard {
 const openBoosterPack = (cards: PokemonCard[], numberOfCards: number = 5): PokemonCard[] => {
   const pack: PokemonCard[] = [];
   const availableCards = [...cards]; // Create a copy to avoid modifying the original array
-
-  // Shuffle the available cards to ensure randomness
-  for (let i = availableCards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [availableCards[i], availableCards[j]] = [availableCards[j], availableCards[i]];
-  }
-
-  // Select the first 'numberOfCards' unique cards
   const selectedCards: { [id: string]: boolean } = {};
   let count = 0;
-  for (let i = 0; i < availableCards.length && count < numberOfCards; i++) {
-    const card = availableCards[i];
+
+  while (pack.length < numberOfCards && availableCards.length > 0) {
+    const randomIndex = Math.floor(Math.random() * availableCards.length);
+    const card = availableCards[randomIndex];
+
     if (!selectedCards[card.id]) {
       pack.push(card);
       selectedCards[card.id] = true;
       count++;
     }
+    availableCards.splice(randomIndex, 1); // Remove the card to prevent duplicates
   }
+
 
   return pack;
 };
@@ -75,15 +73,17 @@ export default function Home() {
 
   const handleOpenPack = () => {
     if (cards.length === 0) {
-      alert(language === 'en' ? "Cards are still loading. Please wait." : "Karten werden noch geladen. Bitte warten.");
+      toast({
+        title: language === 'en' ? "Cards are still loading. Please wait." : "Karten werden noch geladen. Bitte warten.",
+      });
       return;
     }
 
     // Reset the pack before opening a new one
     setPack([]);
+    setResetCards(prev => !prev); // Trigger reset before opening
     const newPack = openBoosterPack(cards);
     setPack(newPack);
-    setResetCards(prev => !prev);
 
   };
 
@@ -112,6 +112,13 @@ export default function Home() {
   const handleLanguageChange = (lang: string) => {
     setLanguage(lang);
   };
+
+  const handleReportProblem = () => {
+    // Implement your problem reporting logic here
+    // This could involve opening a modal, redirecting to a support page, etc.
+    alert(language === 'en' ? "Report a problem feature is not yet implemented." : "Problem melden Funktion ist noch nicht implementiert.");
+  };
+
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4 bg-background">
@@ -181,6 +188,15 @@ export default function Home() {
       <footer className="text-center mt-8 text-muted-foreground">
         <p>&copy; {new Date().getFullYear()} PokePull. {language === 'en' ? 'All rights reserved.' : 'Alle Rechte vorbehalten.'}</p>
       </footer>
+
+      <Button
+        onClick={handleReportProblem}
+        className="fixed bottom-4 right-4 bg-destructive text-destructive-foreground font-bold hover:bg-destructive/80 transition-colors duration-300"
+      >
+        <AlertTriangle className="h-4 w-4 mr-2" />
+        {language === 'en' ? 'Report a Problem' : 'Problem melden'}
+      </Button>
     </div>
   );
 }
+
