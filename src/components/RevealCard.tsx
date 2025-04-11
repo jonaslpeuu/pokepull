@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 
 interface PokemonCard {
@@ -10,10 +10,15 @@ interface PokemonCard {
 
 interface RevealCardProps {
   card: PokemonCard;
+  reset: boolean; // Added reset prop
 }
 
-export const RevealCard: React.FC<RevealCardProps> = ({ card }) => {
+export const RevealCard: React.FC<RevealCardProps> = ({ card, reset }) => {
   const [isRevealed, setIsRevealed] = useState(false);
+
+  useEffect(() => {
+    setIsRevealed(false); // Reset revealed state when reset prop changes
+  }, [reset]);
 
   const handleRevealCard = () => {
     setIsRevealed(true);

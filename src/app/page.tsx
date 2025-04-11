@@ -12,7 +12,9 @@ import { Sun, Moon, Star } from "lucide-react";
 // Define the type for a Pokemon card
 interface PokemonCard {
   id: string;
+  name: string;
   imageUrl: string;
+  rarity: string;
 }
 
 // Function to simulate opening a booster pack
@@ -26,13 +28,18 @@ const openBoosterPack = (cards: PokemonCard[], numberOfCards: number = 5): Pokem
     [availableCards[i], availableCards[j]] = [availableCards[j], availableCards[i]];
   }
 
-  for (let i = 0; i < numberOfCards; i++) {
-    if (availableCards.length === 0) {
-      console.warn("Not enough unique cards available.");
-      break; // Stop if there are no more unique cards
+  // Select the first 'numberOfCards' unique cards
+  const selectedCards: { [id: string]: boolean } = {};
+  let count = 0;
+  for (let i = 0; i < availableCards.length && count < numberOfCards; i++) {
+    const card = availableCards[i];
+    if (!selectedCards[card.id]) {
+      pack.push(card);
+      selectedCards[card.id] = true;
+      count++;
     }
-    pack.push(availableCards[i]);
   }
+
   return pack;
 };
 
@@ -44,6 +51,8 @@ export default function Home() {
   const [showCollection, setShowCollection] = useState(false);
   const { theme, setTheme } = useTheme();
   const [language, setLanguage] = useState('en'); // 'en' for English, 'de' for German
+  const [resetCards, setResetCards] = useState(false); // State to trigger card reset
+
 
   useEffect(() => {
     // Load cards from local JSON file
@@ -68,6 +77,8 @@ export default function Home() {
       alert(language === 'en' ? "Cards are still loading. Please wait." : "Karten werden noch geladen. Bitte warten.");
       return;
     }
+
+    setResetCards(prev => !prev); // Trigger reset
 
     // Reset the pack before opening a new one
     setPack([]);
@@ -143,7 +154,7 @@ export default function Home() {
             <div className="flex justify-center space-x-4">
               {pack.map(card => (
                 <div key={card.id} className="relative">
-                  <RevealCard key={card.id} card={card} />
+                  <RevealCard key={card.id} card={card} reset={resetCards} />
                   <button
                     onClick={() => handleAddToCollection(card)}
                     className="absolute top-2 left-2 bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 p-2 rounded-full"
