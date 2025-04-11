@@ -71,10 +71,17 @@ export default function Home() {
     setCollection(prevCollection => {
       const cardExists = prevCollection.find(c => c.id === card.id);
       if (cardExists) {
-        return prevCollection; // Card already exists, don't add it again
+        // Card already exists, remove it
+        return prevCollection.filter(c => c.id !== card.id);
+      } else {
+        // Card doesn't exist, add it
+        return [...prevCollection, card];
       }
-      return [...prevCollection, card];
     });
+  };
+
+  const isCardInCollection = (card: PokemonCard) => {
+    return collection.some(c => c.id === card.id);
   };
 
 
@@ -129,8 +136,12 @@ export default function Home() {
               {pack.map(card => (
                 <div key={card.id} className="relative">
                   <RevealCard key={card.id} card={card} />
-                  <Button onClick={() => handleAddToCollection(card)} className="absolute top-2 left-2 bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 p-2 rounded-full">
-                    <Star className="h-4 w-4" />
+                  <Button
+                    onClick={() => handleAddToCollection(card)}
+                    className="absolute top-2 left-2 bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 p-2 rounded-full"
+                    aria-label={language === 'en' ? (isCardInCollection(card) ? 'Remove from collection' : 'Add to collection') : (isCardInCollection(card) ? 'Aus Sammlung entfernen' : 'Zur Sammlung hinzufügen')}
+                  >
+                    {isCardInCollection(card) ? <Star className="h-4 w-4 fill-electric-yellow" /> : <Star className="h-4 w-4" />}
                   </Button>
                 </div>
               ))}
