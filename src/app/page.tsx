@@ -5,22 +5,28 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RevealCard } from "@/components/RevealCard";
 import { Collection } from "@/components/Collection";
+import { useTheme } from 'next-themes';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 // Define the type for a Pokemon card
 interface PokemonCard {
   id: string;
-  name: string;
   imageUrl: string;
-  rarity: string;
 }
 
 // Function to simulate opening a booster pack
 const openBoosterPack = (cards: PokemonCard[], numberOfCards: number = 5): PokemonCard[] => {
   const pack: PokemonCard[] = [];
+  const availableCards = [...cards]; // Create a copy to avoid modifying the original array
+
   for (let i = 0; i < numberOfCards; i++) {
-    // Simple random selection for now
-    const randomIndex = Math.floor(Math.random() * cards.length);
-    pack.push(cards[randomIndex]);
+    if (availableCards.length === 0) {
+      console.warn("Not enough unique cards available.");
+      break; // Stop if there are no more unique cards
+    }
+    const randomIndex = Math.floor(Math.random() * availableCards.length);
+    pack.push(availableCards[randomIndex]);
+    availableCards.splice(randomIndex, 1); // Remove the selected card to avoid duplicates
   }
   return pack;
 };
@@ -30,6 +36,8 @@ export default function Home() {
   const [pack, setPack] = useState<PokemonCard[]>([]);
   const [collection, setCollection] = useState<PokemonCard[]>([]);
   const [showCollection, setShowCollection] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [language, setLanguage] = useState('en'); // 'en' for English, 'de' for German
 
   useEffect(() => {
     // Load cards from local JSON file
@@ -51,7 +59,7 @@ export default function Home() {
 
   const handleOpenPack = () => {
     if (cards.length === 0) {
-      alert("Cards are still loading. Please wait.");
+      alert(language === 'en' ? "Cards are still loading. Please wait." : "Karten werden noch geladen. Bitte warten.");
       return;
     }
     const newPack = openBoosterPack(cards);
@@ -70,34 +78,62 @@ export default function Home() {
     setShowCollection(!showCollection);
   };
 
+  const handleLanguageChange = (lang: string) => {
+    setLanguage(lang);
+  };
+
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4 bg-background">
-      <header className="text-center text-foreground mb-8">
-        <h1 className="text-4xl font-bold">PokePull</h1>
-        <p className="text-md text-secondary-foreground">Open Pokemon cards and start your collection!</p>
+      <header className="text-center text-foreground mb-4 w-full">
+        <div className="flex justify-between items-center w-full">
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 px-4 py-2 rounded">
+                {language === 'en' ? 'Language' : 'Sprache'}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => handleLanguageChange('en')}>English</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleLanguageChange('de')}>Deutsch</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <h1 className="text-4xl font-bold">PokePull</h1>
+          <div>
+            <Button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} className="bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 px-4 py-2 rounded">
+              {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+            </Button>
+          </div>
+        </div>
+        <p className="text-md text-secondary-foreground">
+          {language === 'en'
+            ? 'Open Pokemon cards and start your collection!'
+            : 'Öffne Pokémon-Karten und beginne deine Sammlung!'}
+        </p>
       </header>
 
       <main className="flex flex-col items-center justify-center w-full">
         <Button onClick={handleOpenPack} className="bg-accent text-accent-foreground font-bold hover:bg-accent/80 transition-colors duration-300 mb-4">
-          Open Booster Pack
+          {language === 'en' ? 'Open Booster Pack' : 'Boosterpack öffnen'}
         </Button>
 
         {pack.length > 0 && (
           <div className="mb-4">
-            <h2 className="text-foreground text-center mb-2">Your New Cards:</h2>
+            <h2 className="text-foreground text-center mb-2">
+              {language === 'en' ? 'Your New Cards:' : 'Deine neuen Karten:'}
+            </h2>
             <div className="flex justify-center space-x-4">
-               {pack.map(card => (
+              {pack.map(card => (
                 <RevealCard key={card.id} card={card} onAddToCollection={() => handleAddToCollection([card])} />
               ))}
             </div>
-             <Button onClick={() => handleAddToCollection(pack)} className="bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-colors duration-300 mt-4">
-                Add to Collection
-              </Button>
+            <Button onClick={() => handleAddToCollection(pack)} className="bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-colors duration-300 mt-4">
+              {language === 'en' ? 'Add to Collection' : 'Zur Sammlung hinzufügen'}
+            </Button>
           </div>
         )}
 
         <Button onClick={toggleCollection} className="bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 mt-4">
-          {showCollection ? 'Hide Collection' : 'View Collection'}
+          {showCollection ? (language === 'en' ? 'Hide Collection' : 'Sammlung ausblenden') : (language === 'en' ? 'View Collection' : 'Sammlung ansehen')}
         </Button>
 
         {showCollection && (
@@ -106,7 +142,7 @@ export default function Home() {
       </main>
 
       <footer className="text-center mt-8 text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} PokePull. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} PokePull. {language === 'en' ? 'All rights reserved.' : 'Alle Rechte vorbehalten.'}</p>
       </footer>
     </div>
   );

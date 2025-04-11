@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from "@/components/ui/card";
+import React, { useState } from 'react';
+import { Card, CardContent } from "@/components/ui/card";
 
 interface PokemonCard {
   id: string;
-  name: string;
   imageUrl: string;
-  rarity: string;
 }
 
 interface RevealCardProps {
-    card: PokemonCard;
-    onAddToCollection: () => void;
-  }
+  card: PokemonCard;
+  onAddToCollection: () => void;
+}
 
 export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection }) => {
   const [isRevealed, setIsRevealed] = useState(false);
-
-  useEffect(() => {
-    // Reset the revealed state when a new card is rendered.
-    setIsRevealed(false);
-  }, [card]);
 
   const handleRevealCard = () => {
     setIsRevealed(true);
@@ -35,9 +28,9 @@ export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection 
             </button>
           </div>
         ) : (
-          <div className="p-0 flex items-center justify-center">
-            <img src={card.imageUrl} alt={card.name} className="rounded-md h-full w-full object-cover" />
-          </div>
+          <CardContent className="p-0 flex items-center justify-center">
+            <img src={card.imageUrl} alt="Pokemon Card" className="rounded-md h-full w-full object-cover" />
+          </CardContent>
         )}
       </div>
     </Card>
