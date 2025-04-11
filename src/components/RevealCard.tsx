@@ -34,11 +34,10 @@ export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection 
         ) : (
           <CardContent className="p-2 flex flex-col items-center justify-center">
             <img src={card.imageUrl} alt={card.name} className="rounded-md max-h-40 object-contain mb-2" />
-            <h3 className="text-lg font-semibold text-foreground">{card.name}</h3>
-            <p className="text-sm text-muted-foreground">Rarity: {card.rarity}</p>
           </CardContent>
         )}
       </div>
     </Card>
   );
 };
+
