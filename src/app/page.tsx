@@ -7,6 +7,7 @@ import { RevealCard } from "@/components/RevealCard";
 import { Collection } from "@/components/Collection";
 import { useTheme } from 'next-themes';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Sun, Moon } from "lucide-react";
 
 // Define the type for a Pokemon card
 interface PokemonCard {
@@ -100,7 +101,7 @@ export default function Home() {
           <h1 className="text-4xl font-bold">PokePull</h1>
           <div>
             <Button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} className="bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 px-4 py-2 rounded">
-              {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+              {theme === 'light' ? <Moon className="h-4 w-4"/> : <Sun className="h-4 w-4"/>}
             </Button>
           </div>
         </div>
