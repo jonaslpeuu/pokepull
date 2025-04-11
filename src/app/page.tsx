@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RevealCard } from "@/components/RevealCard";
 import { Collection } from "@/components/Collection";
 import { useTheme } from 'next-themes';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Sun, Moon, Star, AlertTriangle } from "lucide-react";
+import { Sun, Moon, AlertTriangle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import StarButton from "@/components/StarButton";
 
 // Define the type for a Pokemon card
 interface PokemonCard {
@@ -20,6 +21,11 @@ interface PokemonCard {
 
 // Function to simulate opening a booster pack
 const openBoosterPack = (cards: PokemonCard[], numberOfCards: number = 5): PokemonCard[] => {
+  if (!cards || cards.length === 0) {
+    console.warn("No cards available to open a booster pack.");
+    return [];
+  }
+
   const pack: PokemonCard[] = [];
   const availableCards = [...cards]; // Create a copy to avoid modifying the original array
   const selectedCards: { [id: string]: boolean } = {};
@@ -50,7 +56,6 @@ export default function Home() {
   const { theme, setTheme } = useTheme();
   const [language, setLanguage] = useState('en'); // 'en' for English, 'de' for German
   const [resetCards, setResetCards] = useState(false); // State to trigger card reset
-  const cardRefs = useRef<{[key: string]: any}>({});
 
 
   useEffect(() => {
@@ -163,13 +168,7 @@ export default function Home() {
               {pack.map(card => (
                 <div key={card.id} className="relative">
                   <RevealCard key={card.id} card={card} reset={resetCards}  />
-                  <button
-                    onClick={() => handleAddToCollection(card)}
-                    className="absolute top-2 left-2 bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 p-2 rounded-full"
-                    aria-label={language === 'en' ? (isCardInCollection(card) ? 'Remove from collection' : 'Add to collection') : (isCardInCollection(card) ? 'Aus Sammlung entfernen' : 'Zur Sammlung hinzufügen')}
-                  >
-                    {isCardInCollection(card) ? <Star className="h-4 w-4 fill-electric-yellow" /> : <Star className="h-4 w-4" />}
-                  </button>
+                  <StarButton card={card} collection={collection} handleAddToCollection={handleAddToCollection} language={language} />
                 </div>
               ))}
             </div>
