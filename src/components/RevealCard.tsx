@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,7 +20,7 @@ export const RevealCard: React.FC<RevealCardProps> = ({ card }) => {
   };
 
   return (
-    <Card className={`w-48 h-64 relative transition-transform duration-500 ${isRevealed ? 'transform-none' : 'transform rotate-y-180'}`}>
+    <Card className={`w-48 h-64 relative transition-transform duration-500 ${isRevealed ? '' : 'rotate-y-180'}`}>
       <div className="absolute w-full h-full backface-hidden">
         {!isRevealed ? (
           <div className="bg-secondary h-full flex items-center justify-center rounded-md">
@@ -37,4 +37,3 @@ export const RevealCard: React.FC<RevealCardProps> = ({ card }) => {
     </Card>
   );
 };
-

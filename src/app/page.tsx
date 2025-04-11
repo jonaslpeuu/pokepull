@@ -20,17 +20,22 @@ const openBoosterPack = (cards: PokemonCard[], numberOfCards: number = 5): Pokem
   const pack: PokemonCard[] = [];
   const availableCards = [...cards]; // Create a copy to avoid modifying the original array
 
+  // Shuffle the available cards to ensure randomness
+  for (let i = availableCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [availableCards[i], availableCards[j]] = [availableCards[j], availableCards[i]];
+  }
+
   for (let i = 0; i < numberOfCards; i++) {
     if (availableCards.length === 0) {
       console.warn("Not enough unique cards available.");
       break; // Stop if there are no more unique cards
     }
-    const randomIndex = Math.floor(Math.random() * availableCards.length);
-    pack.push(availableCards[randomIndex]);
-    availableCards.splice(randomIndex, 1); // Remove the selected card to avoid duplicates
+    pack.push(availableCards[i]);
   }
   return pack;
 };
+
 
 export default function Home() {
   const [cards, setCards] = useState<PokemonCard[]>([]);
@@ -63,6 +68,9 @@ export default function Home() {
       alert(language === 'en' ? "Cards are still loading. Please wait." : "Karten werden noch geladen. Bitte warten.");
       return;
     }
+
+    // Reset the pack before opening a new one
+    setPack([]);
     const newPack = openBoosterPack(cards);
     setPack(newPack);
   };
@@ -136,13 +144,13 @@ export default function Home() {
               {pack.map(card => (
                 <div key={card.id} className="relative">
                   <RevealCard key={card.id} card={card} />
-                  <Button
+                  <button
                     onClick={() => handleAddToCollection(card)}
                     className="absolute top-2 left-2 bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 p-2 rounded-full"
                     aria-label={language === 'en' ? (isCardInCollection(card) ? 'Remove from collection' : 'Add to collection') : (isCardInCollection(card) ? 'Aus Sammlung entfernen' : 'Zur Sammlung hinzufügen')}
                   >
                     {isCardInCollection(card) ? <Star className="h-4 w-4 fill-electric-yellow" /> : <Star className="h-4 w-4" />}
-                  </Button>
+                  </button>
                 </div>
               ))}
             </div>
