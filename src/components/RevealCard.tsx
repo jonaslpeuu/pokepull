@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,12 +31,11 @@ export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection 
             </Button>
           </div>
         ) : (
-          <CardContent className="p-2 flex flex-col items-center justify-center">
-            <img src={card.imageUrl} alt={card.name} className="rounded-md max-h-40 object-contain mb-2" />
+          <CardContent className="p-0 flex items-center justify-center">
+            <img src={card.imageUrl} alt={card.name} className="rounded-md h-full w-full object-cover" />
           </CardContent>
         )}
       </div>
     </Card>
   );
 };
-
