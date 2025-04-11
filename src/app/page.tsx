@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RevealCard } from "@/components/RevealCard";
@@ -52,6 +52,7 @@ export default function Home() {
   const { theme, setTheme } = useTheme();
   const [language, setLanguage] = useState('en'); // 'en' for English, 'de' for German
   const [resetCards, setResetCards] = useState(false); // State to trigger card reset
+  const cardRefs = useRef<{[key: string]: any}>({});
 
 
   useEffect(() => {
@@ -78,12 +79,12 @@ export default function Home() {
       return;
     }
 
-    setResetCards(prev => !prev); // Trigger reset
-
     // Reset the pack before opening a new one
     setPack([]);
     const newPack = openBoosterPack(cards);
     setPack(newPack);
+    setResetCards(prev => !prev);
+
   };
 
   const handleAddToCollection = (card: PokemonCard) => {
@@ -154,7 +155,7 @@ export default function Home() {
             <div className="flex justify-center space-x-4">
               {pack.map(card => (
                 <div key={card.id} className="relative">
-                  <RevealCard key={card.id} card={card} reset={resetCards} />
+                  <RevealCard key={card.id} card={card} reset={resetCards}  />
                   <button
                     onClick={() => handleAddToCollection(card)}
                     className="absolute top-2 left-2 bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 p-2 rounded-full"
