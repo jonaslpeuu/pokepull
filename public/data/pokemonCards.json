@@ -1,0 +1,63 @@
+
+[
+    {
+      "id": "card-1",
+      "name": "Pikachu",
+      "imageUrl": "https://picsum.photos/id/1025/200/300",
+      "rarity": "Common"
+    },
+    {
+      "id": "card-2",
+      "name": "Charizard",
+      "imageUrl": "https://picsum.photos/id/1074/200/300",
+      "rarity": "Rare"
+    },
+    {
+      "id": "card-3",
+      "name": "Bulbasaur",
+      "imageUrl": "https://picsum.photos/id/1052/200/300",
+      "rarity": "Common"
+    },
+    {
+      "id": "card-4",
+      "name": "Blastoise",
+      "imageUrl": "https://picsum.photos/id/1049/200/300",
+      "rarity": "Uncommon"
+    },
+    {
+      "id": "card-5",
+      "name": "Venusaur",
+      "imageUrl": "https://picsum.photos/id/1069/200/300",
+      "rarity": "Rare"
+    },
+    {
+      "id": "card-6",
+      "name": "Mewtwo",
+      "imageUrl": "https://picsum.photos/id/1062/200/300",
+      "rarity": "Legendary"
+    },
+    {
+      "id": "card-7",
+      "name": "Gyarados",
+      "imageUrl": "https://picsum.photos/id/1043/200/300",
+      "rarity": "Uncommon"
+    },
+    {
+      "id": "card-8",
+      "name": "Eevee",
+      "imageUrl": "https://picsum.photos/id/1038/200/300",
+      "rarity": "Common"
+    },
+    {
+      "id": "card-9",
+      "name": "Snorlax",
+      "imageUrl": "https://picsum.photos/id/1020/200/300",
+      "rarity": "Uncommon"
+    },
+    {
+      "id": "card-10",
+      "name": "Dragonite",
+      "imageUrl": "https://picsum.photos/id/1015/200/300",
+      "rarity": "Rare"
+    }
+  ]
