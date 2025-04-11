@@ -15,14 +15,9 @@ interface RevealCardProps {
 
 export const RevealCard: React.FC<RevealCardProps> = ({ card, reset }) => {
   const [isRevealed, setIsRevealed] = useState(false);
-  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    setIsRevealed(false);
+    setIsRevealed(false); // Reset the card to face down when 'reset' changes
   }, [reset]);
 
   const handleRevealCard = () => {
