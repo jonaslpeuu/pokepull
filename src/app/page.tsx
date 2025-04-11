@@ -7,7 +7,7 @@ import { RevealCard } from "@/components/RevealCard";
 import { Collection } from "@/components/Collection";
 import { useTheme } from 'next-themes';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Star } from "lucide-react";
 
 // Define the type for a Pokemon card
 interface PokemonCard {
@@ -67,13 +67,16 @@ export default function Home() {
     setPack(newPack);
   };
 
-  const handleAddToCollection = (newCards: PokemonCard[]) => {
+  const handleAddToCollection = (card: PokemonCard) => {
     setCollection(prevCollection => {
-      const updatedCollection = [...prevCollection, ...newCards];
-      return updatedCollection;
+      const cardExists = prevCollection.find(c => c.id === card.id);
+      if (cardExists) {
+        return prevCollection; // Card already exists, don't add it again
+      }
+      return [...prevCollection, card];
     });
-    setPack([]); // Clear the pack after adding to collection
   };
+
 
   const toggleCollection = () => {
     setShowCollection(!showCollection);
@@ -124,12 +127,14 @@ export default function Home() {
             </h2>
             <div className="flex justify-center space-x-4">
               {pack.map(card => (
-                <RevealCard key={card.id} card={card} onAddToCollection={() => handleAddToCollection([card])} />
+                <div key={card.id} className="relative">
+                  <RevealCard key={card.id} card={card} />
+                  <Button onClick={() => handleAddToCollection(card)} className="absolute top-2 left-2 bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 p-2 rounded-full">
+                    <Star className="h-4 w-4" />
+                  </Button>
+                </div>
               ))}
             </div>
-            <Button onClick={() => handleAddToCollection(pack)} className="bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-colors duration-300 mt-4">
-              {language === 'en' ? 'Add to Collection' : 'Zur Sammlung hinzufügen'}
-            </Button>
           </div>
         )}
 

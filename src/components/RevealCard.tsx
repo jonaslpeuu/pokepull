@@ -8,10 +8,9 @@ interface PokemonCard {
 
 interface RevealCardProps {
   card: PokemonCard;
-  onAddToCollection: () => void;
 }
 
-export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection }) => {
+export const RevealCard: React.FC<RevealCardProps> = ({ card }) => {
   const [isRevealed, setIsRevealed] = useState(false);
 
   const handleRevealCard = () => {
