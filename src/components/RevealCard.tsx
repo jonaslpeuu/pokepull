@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import React, { useState, useEffect } from 'react';
+import { Card } from "@/components/ui/card";
 
 interface PokemonCard {
   id: string;
@@ -17,6 +16,11 @@ interface RevealCardProps {
 export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection }) => {
   const [isRevealed, setIsRevealed] = useState(false);
 
+  useEffect(() => {
+    // Reset the revealed state when a new card is rendered.
+    setIsRevealed(false);
+  }, [card]);
+
   const handleRevealCard = () => {
     setIsRevealed(true);
   };
@@ -26,14 +30,14 @@ export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection 
       <div className="absolute w-full h-full backface-hidden">
         {!isRevealed ? (
           <div className="bg-secondary h-full flex items-center justify-center rounded-md">
-            <Button onClick={handleRevealCard} className="bg-accent text-accent-foreground font-bold hover:bg-accent/80 transition-colors duration-300">
+            <button onClick={handleRevealCard} className="bg-accent text-accent-foreground font-bold hover:bg-accent/80 transition-colors duration-300 px-4 py-2 rounded">
               Reveal Card
-            </Button>
+            </button>
           </div>
         ) : (
-          <CardContent className="p-0 flex items-center justify-center">
+          <div className="p-0 flex items-center justify-center">
             <img src={card.imageUrl} alt={card.name} className="rounded-md h-full w-full object-cover" />
-          </CardContent>
+          </div>
         )}
       </div>
     </Card>
