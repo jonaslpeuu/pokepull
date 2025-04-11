@@ -47,6 +47,18 @@ body {
     --electric-yellow: 48 100% 50%; /* HSL for #FFEA00 */
     --cerulean-blue: 207 74% 41%; /* HSL for #1775BE */
     --vibrant-orange: 24 100% 50%; /* HSL for #FF7900 */
+
+    /* Modern color scheme */
+    --background: 220 3% 96%; /* Slightly off-white */
+    --foreground: 220 5% 20%; /* Dark gray */
+    --primary: 260 80% 50%; /* Vibrant purple */
+    --primary-foreground: 0 0% 100%; /* White */
+    --secondary: 220 3% 85%; /* Light gray */
+    --secondary-foreground: 220 5% 30%; /* Medium gray */
+    --accent: 40 90% 50%; /* Teal/Aqua */
+    --accent-foreground: 0 0% 100%; /* White */
+    --card-border: 240 10% 92%; /* Very light gray */
+    --card-drop-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -96,4 +108,23 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Card Styles */
+.card {
+  @apply rounded-lg border shadow-sm bg-card text-card-foreground;
+  box-shadow: var(--card-drop-shadow);
+}
+
+.card-title {
+  @apply text-lg font-semibold;
+}
+
+.card-description {
+  @apply text-sm text-secondary-foreground;
+}
+
+/* Button Styles */
+.button-primary {
+  @apply bg-primary text-primary-foreground rounded-md py-2 px-4 font-semibold transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1;
 }

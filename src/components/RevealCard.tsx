@@ -26,24 +26,19 @@ export const RevealCard: React.FC<RevealCardProps> = ({ card, onAddToCollection 
     <Card className={`w-48 h-64 relative transition-transform duration-500 ${isRevealed ? 'transform-none' : 'transform rotate-y-180'}`}>
       <div className="absolute w-full h-full backface-hidden">
         {!isRevealed ? (
-          <div className="bg-gray-700 h-full flex items-center justify-center">
-            <Button onClick={handleRevealCard} className="bg-electric-yellow text-cerulean-blue font-bold hover:bg-vibrant-orange transition-colors duration-300">
+          <div className="bg-secondary h-full flex items-center justify-center rounded-md">
+            <Button onClick={handleRevealCard} className="bg-accent text-accent-foreground font-bold hover:bg-accent/80 transition-colors duration-300">
               Reveal Card
             </Button>
           </div>
         ) : (
           <CardContent className="p-2 flex flex-col items-center justify-center">
-            <img src={card.imageUrl} alt={card.name} className="max-h-40 object-contain mb-2" />
-            <h3 className="text-lg font-semibold text-cerulean-blue">{card.name}</h3>
-            <p className="text-sm text-gray-600">Rarity: {card.rarity}</p>
+            <img src={card.imageUrl} alt={card.name} className="rounded-md max-h-40 object-contain mb-2" />
+            <h3 className="text-lg font-semibold text-foreground">{card.name}</h3>
+            <p className="text-sm text-muted-foreground">Rarity: {card.rarity}</p>
           </CardContent>
         )}
       </div>
-      {isRevealed && (
-        <Button onClick={onAddToCollection} className="bg-cerulean-blue text-white font-bold hover:bg-vibrant-orange transition-colors duration-300 mt-4">
-          Add to Collection
-        </Button>
-      )}
     </Card>
   );
 };

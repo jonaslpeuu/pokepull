@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -72,32 +71,32 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-4 bg-cerulean-blue">
-      <header className="text-center text-white mb-8">
+    <div className="flex flex-col items-center justify-start min-h-screen p-4 bg-background">
+      <header className="text-center text-foreground mb-8">
         <h1 className="text-4xl font-bold">PokePull</h1>
-        <p className="text-md">Open Pokemon cards and start your collection!</p>
+        <p className="text-md text-secondary-foreground">Open Pokemon cards and start your collection!</p>
       </header>
 
       <main className="flex flex-col items-center justify-center w-full">
-        <Button onClick={handleOpenPack} className="bg-electric-yellow text-cerulean-blue font-bold hover:bg-vibrant-orange transition-colors duration-300 mb-4">
+        <Button onClick={handleOpenPack} className="bg-accent text-accent-foreground font-bold hover:bg-accent/80 transition-colors duration-300 mb-4">
           Open Booster Pack
         </Button>
 
         {pack.length > 0 && (
           <div className="mb-4">
-            <h2 className="text-white text-center mb-2">Your New Cards:</h2>
+            <h2 className="text-foreground text-center mb-2">Your New Cards:</h2>
             <div className="flex justify-center space-x-4">
                {pack.map(card => (
                 <RevealCard key={card.id} card={card} onAddToCollection={() => handleAddToCollection([card])} />
               ))}
             </div>
-             <Button onClick={() => handleAddToCollection(pack)} className="bg-cerulean-blue text-white font-bold hover:bg-vibrant-orange transition-colors duration-300 mt-4">
+             <Button onClick={() => handleAddToCollection(pack)} className="bg-primary text-primary-foreground font-bold hover:bg-primary/80 transition-colors duration-300 mt-4">
                 Add to Collection
               </Button>
           </div>
         )}
 
-        <Button onClick={toggleCollection} className="bg-electric-yellow text-cerulean-blue font-bold hover:bg-vibrant-orange transition-colors duration-300 mt-4">
+        <Button onClick={toggleCollection} className="bg-secondary text-secondary-foreground font-bold hover:bg-secondary/80 transition-colors duration-300 mt-4">
           {showCollection ? 'Hide Collection' : 'View Collection'}
         </Button>
 
@@ -106,7 +105,7 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="text-center mt-8 text-gray-300">
+      <footer className="text-center mt-8 text-muted-foreground">
         <p>&copy; {new Date().getFullYear()} PokePull. All rights reserved.</p>
       </footer>
     </div>

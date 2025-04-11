@@ -2,62 +2,62 @@
 [
     {
       "id": "card-1",
-      "name": "Pikachu",
-      "imageUrl": "https://picsum.photos/id/1025/200/300",
-      "rarity": "Common"
+      "name": "Base Set Charizard",
+      "imageUrl": "https://images.pokemontcg.io/base1/4.png",
+      "rarity": "Rare"
     },
     {
       "id": "card-2",
-      "name": "Charizard",
-      "imageUrl": "https://picsum.photos/id/1074/200/300",
+      "name": "Jungle Set Jolteon",
+      "imageUrl": "https://images.pokemontcg.io/jungle/4.png",
       "rarity": "Rare"
     },
     {
       "id": "card-3",
-      "name": "Bulbasaur",
-      "imageUrl": "https://picsum.photos/id/1052/200/300",
-      "rarity": "Common"
+      "name": "Fossil Set Gengar",
+      "imageUrl": "https://images.pokemontcg.io/fossil/18.png",
+      "rarity": "Uncommon"
     },
     {
       "id": "card-4",
-      "name": "Blastoise",
-      "imageUrl": "https://picsum.photos/id/1049/200/300",
-      "rarity": "Uncommon"
-    },
-    {
-      "id": "card-5",
-      "name": "Venusaur",
-      "imageUrl": "https://picsum.photos/id/1069/200/300",
+      "name": "Base Set Blastoise",
+      "imageUrl": "https://images.pokemontcg.io/base1/2.png",
       "rarity": "Rare"
     },
     {
-      "id": "card-6",
-      "name": "Mewtwo",
-      "imageUrl": "https://picsum.photos/id/1062/200/300",
-      "rarity": "Legendary"
-    },
-    {
-      "id": "card-7",
-      "name": "Gyarados",
-      "imageUrl": "https://picsum.photos/id/1043/200/300",
+      "id": "card-5",
+      "name": "Team Rocket Dark Arbok",
+      "imageUrl": "https://images.pokemontcg.io/rocket/2.png",
       "rarity": "Uncommon"
     },
     {
-      "id": "card-8",
-      "name": "Eevee",
-      "imageUrl": "https://picsum.photos/id/1038/200/300",
+      "id": "card-6",
+      "name": "Gym Heroes Brock's Rhydon",
+      "imageUrl": "https://images.pokemontcg.io/gym1/67.png",
       "rarity": "Common"
     },
     {
+      "id": "card-7",
+      "name": "Gym Challenge Giovanni's Nidoking",
+      "imageUrl": "https://images.pokemontcg.io/gym2/7.png",
+      "rarity": "Rare"
+    },
+    {
+      "id": "card-8",
+      "name": "Neo Genesis Lugia",
+      "imageUrl": "https://images.pokemontcg.io/neo1/27.png",
+      "rarity": "Rare"
+    },
+    {
       "id": "card-9",
-      "name": "Snorlax",
-      "imageUrl": "https://picsum.photos/id/1020/200/300",
-      "rarity": "Uncommon"
+      "name": "Neo Discovery Espeon",
+      "imageUrl": "https://images.pokemontcg.io/neo2/1.png",
+      "rarity": "Rare"
     },
     {
       "id": "card-10",
-      "name": "Dragonite",
-      "imageUrl": "https://picsum.photos/id/1015/200/300",
+      "name": "Neo Revelation Suicune",
+      "imageUrl": "https://images.pokemontcg.io/neo3/14.png",
       "rarity": "Rare"
     }
   ]

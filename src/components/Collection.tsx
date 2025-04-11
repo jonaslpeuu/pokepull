@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Card, CardContent } from "@/components/ui/card";
 
 interface PokemonCard {
   id: string;
@@ -14,15 +15,15 @@ interface CollectionProps {
 
 export const Collection: React.FC<CollectionProps> = ({ cards }) => {
   return (
-    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {cards.map(card => (
-        <div key={card.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-          <img src={card.imageUrl} alt={card.name} className="w-full h-32 object-cover" />
-          <div className="p-4">
-            <h3 className="text-md font-semibold text-gray-800">{card.name}</h3>
-            <p className="text-sm text-gray-600">Rarity: {card.rarity}</p>
-          </div>
-        </div>
+        <Card key={card.id} className="w-32">
+          <CardContent className="p-2 flex flex-col items-center">
+            <img src={card.imageUrl} alt={card.name} className="rounded-md mb-2 w-24 h-24 object-cover" />
+            <h3 className="text-sm font-semibold">{card.name}</h3>
+            <p className="text-xs text-muted-foreground">Rarity: {card.rarity}</p>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );
